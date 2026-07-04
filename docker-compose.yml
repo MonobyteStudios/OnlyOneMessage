@@ -1,0 +1,51 @@
+services:
+  onlyonemessage:
+    build: . # root directory
+    container_name: onlyonemessage
+    restart: unless-stopped
+    
+    depends_on:
+      - mongodb
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - data/.env
+
+    # HOST:CONTAINER
+    ports:
+      - "9200:9200" # Metrics port (Prometheus)
+      - "9300:9300" # API port (Flask)
+
+  mongodb: # database service for OnlyOneMessage
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+
+    env_file:
+      - data/.env
+    volumes:
+      - mongo_data:/data/db
+
+
+  mongo-backup: # backup service for MongoDB
+    image: mongo:latest
+    container_name: mongodb-backup
+    restart: unless-stopped
+
+    depends_on:
+      - mongodb
+    volumes:
+      - ./data/backups:/backups # where backups are stored at, change if needed
+    env_file:
+      - data/.env
+
+    # backups are taken every 24 hours, old backups are deleted after 7 days
+    entrypoint: |
+          bash -c 'while true; do
+            mongodump --host mongodb -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --out /backups/$$(date +%Y-%m-%d_%H-%M-%S)
+            find /backups -maxdepth 1 -type d -mtime +7 -exec rm -rf {} +
+            sleep 86400
+          done'
+          
+volumes:
+  mongo_data:

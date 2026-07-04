@@ -1,0 +1,27 @@
+name: Deploy OnlyOneMessage
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Create .env file
+        run: |
+          mkdir -p data
+          echo "${{ secrets.ENVIRONMENT }}" > data/.env
+
+      - name: Build Docker image
+        run: docker build -t onlyonemessage .
+
+      - name: Deploy Docker image
+        run: |
+          docker compose stop onlyonemessage
+          docker compose rm -f onlyonemessage
+          docker compose up -d --no-deps onlyonemessage

@@ -1,0 +1,14 @@
+requests
+asyncio
+discord.py
+python-dotenv
+pymongo[srv]
+sentry-sdk
+psutil
+prometheus_client
+flask
+flask-limiter
+flask_cors
+waitress
+aiohttp
+cryptography
