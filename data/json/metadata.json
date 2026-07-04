@@ -3,7 +3,7 @@
     "build": "2026.7.4",
     "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]",
 
-    "development": true,
+    "development": false,
     "sentry_logging": true,
     "metrics_logging": true,
     "api_support": true,
