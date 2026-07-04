@@ -13,8 +13,9 @@ def register(app, bot):
             startTime = getattr(bot, "StartTime", None)
             uptime = round(time.time() - startTime)
 
-            whitelists = getvar("totalwhitelists", "metadata.json")
-            blacklists = getvar("totalblacklists", "metadata.json")
+            global_data = bot.globaldata.find_one({"_id": "global"}) or {}
+            whitelists = global_data.get("totalwhitelists", 0)
+            blacklists = global_data.get("totalblacklists", 0)
             totalmsgs = whitelists + blacklists
 
             trackAPIrequest(bot, "/v1/stats", 200)
