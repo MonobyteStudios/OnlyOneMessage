@@ -18,7 +18,7 @@ jobs:
           echo "${{ secrets.ENVIRONMENT }}" > data/.env
 
       - name: Build Docker image
-        run: docker build -t onlyonemessage .
+        run: docker build --network=host -t onlyonemessage .
 
       - name: Deploy Docker image
         run: |
