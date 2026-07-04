@@ -1,6 +1,7 @@
 services:
   onlyonemessage:
     build: . # root directory
+    image: onlyonemessage:latest
     container_name: onlyonemessage
     restart: unless-stopped
     

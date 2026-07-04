@@ -17,9 +17,11 @@ jobs:
           mkdir -p data
           echo "${{ secrets.ENVIRONMENT }}" > data/.env
 
-      - name: Build and Deploy via Compose
+      - name: Build Docker image
+        run: docker build --network=host -t onlyonemessage .
+
+      - name: Deploy Docker image
         run: |
-          docker compose build --no-cache onlyonemessage
           docker compose stop onlyonemessage
           docker compose rm -f onlyonemessage
           docker compose up -d --no-deps onlyonemessage
