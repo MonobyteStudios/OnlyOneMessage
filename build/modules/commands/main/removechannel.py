@@ -110,9 +110,6 @@ class RemoveChannel(commands.Cog):
 
             view.add_item(container)
             await interaction.followup.send(view=view, ephemeral=True)
-            
-            import sentry_sdk
-            sentry_sdk.capture_exception(e)
 
 
 

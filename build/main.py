@@ -7,8 +7,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 from collections import Counter
-import sentry_sdk
-from essential.metadata import version, devBranch, build, copyright, DEV_GUILDS, sentryLogging
+from essential.metadata import version, devBranch, build, copyright, DEV_GUILDS
 from essential.logging import logmsg
 
 
@@ -37,27 +36,6 @@ client = commands.AutoShardedBot(
     help_command=None, 
     intents=intents
 )
-
-
-
-
-load_dotenv(dotenv_path=os.path.join("data", ".env"))
-dsn = os.getenv("SENTRY_DSN")
-environment = "development" if devBranch else "Production"
-
-def silence_sentry(event, hint):
-    return None  # drop all events
-
-sentry_sdk.init(
-    dsn=dsn if sentryLogging and dsn else None, # only initialize sentry if logging is enabled and a DSN is provided
-    environment=environment,
-    send_default_pii=True,
-    traces_sample_rate=0,
-    before_send=silence_sentry if devBranch else None, # disable reporting to sentry if on development branch
-)
-
-logmsg("INFO", f"Sentry initialized - environment: '{environment}', reporting: {'disabled' if devBranch else 'enabled'}", 
-function="startup")
 
 
 

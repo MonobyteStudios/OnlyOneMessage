@@ -1,10 +1,9 @@
 {
-    "version": "v2.0",
+    "version": "v2.0a",
     "build": "2026.7.4",
     "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]",
 
-    "development": false,
-    "sentry_logging": true,
+    "development": true,
     "metrics_logging": true,
     "api_support": true,
     "topgg_support": true,

@@ -15,7 +15,7 @@ OnlyOneMessage is a feature-rich Discord bot that provides server admins **compl
 Set slowmodes **surpassing Discord's limit**, log **individual member cooldowns**, and **fine-tune** settings for **each individual channel**;
 all through a straightfoward interface using Discord's slash commands.
 
-v2.0 [Build 2026.7.4]
+v2.0a [Build 2026.7.4]
 
 📎 Visit the website: [onlyonemessage.monobyte.studio](https://onlyonemessage.monobyte.studio)
 
@@ -27,7 +27,7 @@ v2.0 [Build 2026.7.4]
 - **⏳ Advanced Slowmode Control** - Set channel slowmodes lasting hours, days, **or even indefinitely**; surpassing Discord's limitations.
 - **💬 Smart Message Management** - Allow members to **chat again** once they delete their message, providing complete flexibility in message flow.
 - **📝 Detailed Logging** - Automatically log when members enter slowmode **and when they expire**, including other essential options
-- **📊 Analytics** - Built-in Prometheus and Sentry error tracking for reliability 
+- **📊 Analytics** - Built-in Prometheus tracking for reliability 
 - **🐬 Docker Supported** - Containerized deployment with Docker for easy usage
 
 
@@ -80,7 +80,6 @@ MONGO_DEV_DB=onlyonemessage-development
 
 # This is required only if their respective feature is enabled in metadata.json
 TOPGG_TOKEN=
-SENTRY_DSN=
 ```
 
 > [!TIP]
@@ -94,7 +93,6 @@ update the provided fields in the file to your liking:
 ```bash
 {
     "development": false, # Whether to use the development or production environment
-    "sentry_logging": false, # Whether to catch exceptions in the codebase using Sentry
     "metrics_logging": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
     "api_support": false, # Whether the API is enabled or not (If enabled, port 9300 will be opened)
     "topgg_support": false, # Whether the bot will use top.gg integration

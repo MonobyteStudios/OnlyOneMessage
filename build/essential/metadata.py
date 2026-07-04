@@ -18,7 +18,6 @@ build = getvar("build", "metadata.json") or "[N/A]"
 copyright = getvar("copyright", "metadata.json") or "[N/A]"
 
 devBranch = getvar("development", "metadata.json") if getvar("development", "metadata.json") is not None else True
-sentryLogging = getvar("sentry_logging", "metadata.json") if getvar("sentry_logging", "metadata.json") is not None else True
 metricsLogging = getvar("metrics_logging", "metadata.json") if getvar("metrics_logging", "metadata.json") is not None else True
 
 apiSupported = getvar("api_support", "metadata.json") if getvar("api_support", "metadata.json") is not None else True
