@@ -20,6 +20,21 @@ jobs:
       - name: Build Docker image
         run: docker build --network=host -t onlyonemessage .
 
+      - name: Create Compose Override for Loki
+        run: |
+          cat <<EOF > docker-compose.override.yml
+          services:
+            onlyonemessage:
+              logging:
+                driver: loki
+                options:
+                  loki-url: "http://localhost:3100/loki/api/v1/push"
+                  loki-retries: "2"
+                  loki-max-backoff: "800ms"
+                  loki-timeout: "1s"
+                  keep-file: "true"
+          EOF
+
       - name: Deploy Docker image
         run: |
           docker compose stop onlyonemessage
