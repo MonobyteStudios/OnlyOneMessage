@@ -69,10 +69,10 @@ class Guilds(commands.Cog):
                 disabled=(page_index == 0)
             )
             async def last_callback(interaction: discord.Interaction):
-                if view.current_page > 0:
-                    view.current_page -= 1
-                    await interaction.response.edit_message(view=renderview(view.current_page))
-                    logmsg("DEBUG", f"Paginated to page {view.current_page + 1}", 
+                if page_index > 0:
+                    new_page = page_index - 1
+                    await interaction.response.edit_message(view=renderview(new_page))
+                    logmsg("DEBUG", f"Paginated to page {new_page + 1}", 
                            guild=str(interaction.guild.id), function="guilds")
 
             last.callback = last_callback
@@ -84,10 +84,10 @@ class Guilds(commands.Cog):
                 disabled=(page_index == total_pages - 1)
             )
             async def next_callback(interaction: discord.Interaction):
-                if view.current_page < total_pages - 1:
-                    view.current_page += 1
-                    await interaction.response.edit_message(view=renderview(view.current_page))
-                    logmsg("DEBUG", f"Paginated to page {view.current_page + 1}", 
+                if page_index < total_pages - 1:
+                    new_page = page_index + 1
+                    await interaction.response.edit_message(view=renderview(new_page))
+                    logmsg("DEBUG", f"Paginated to page {new_page + 1}", 
                            guild=str(interaction.guild.id), function="guilds")
 
             next.callback = next_callback
