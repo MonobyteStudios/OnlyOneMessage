@@ -15,7 +15,7 @@ OnlyOneMessage is a feature-rich Discord bot that provides server admins **compl
 Set slowmodes **surpassing Discord's limit**, log **individual member cooldowns**, and **fine-tune** settings for **each individual channel**;
 all through a straightfoward interface using Discord's slash commands.
 
-v2.0 [Build 2026.7.4]
+v2.0a [Build 2026.7.5]
 
 📎 Visit the website: [onlyonemessage.monobyte.studio](https://onlyonemessage.monobyte.studio)
 
@@ -27,7 +27,7 @@ v2.0 [Build 2026.7.4]
 - **⏳ Advanced Slowmode Control** - Set channel slowmodes lasting hours, days, **or even indefinitely**; surpassing Discord's limitations.
 - **💬 Smart Message Management** - Allow members to **chat again** once they delete their message, providing complete flexibility in message flow.
 - **📝 Detailed Logging** - Automatically log when members enter slowmode **and when they expire**, including other essential options
-- **📊 Analytics** - Built-in Prometheus and Sentry error tracking for reliability 
+- **📊 Analytics** - Built-in Prometheus tracking for reliability 
 - **🐬 Docker Supported** - Containerized deployment with Docker for easy usage
 
 
@@ -78,9 +78,8 @@ MONGO_INITDB_ROOT_PASSWORD= # Make sure this password matches what's provided in
 MONGO_PROD_DB=onlyonemessage-production
 MONGO_DEV_DB=onlyonemessage-development
 
-# This is required only if their respective feature is enabled in metadata.json
+# These fields may be safely removed if you don't want them
 TOPGG_TOKEN=
-SENTRY_DSN=
 ```
 
 > [!TIP]
@@ -94,10 +93,8 @@ update the provided fields in the file to your liking:
 ```bash
 {
     "development": false, # Whether to use the development or production environment
-    "sentry_logging": false, # Whether to catch exceptions in the codebase using Sentry
-    "metrics_logging": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
+    "metrics_support": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
     "api_support": false, # Whether the API is enabled or not (If enabled, port 9300 will be opened)
-    "topgg_support": false, # Whether the bot will use top.gg integration
 
     "admins": [
         # Discord user ID's who have access to development commands
@@ -109,10 +106,10 @@ update the provided fields in the file to your liking:
 ```
 
 Additionally, edit the file `/data/json/channels.json` to match your setup.
-You do not need to touch this file if `metrics_logging` is set to `false`.
+You do not need to touch this file if `metrics_support` is set to `false`.
 
 
-5. Run the bot:
+4. Run the bot:
 ```bash
 docker compose up -d
 ```
@@ -155,7 +152,7 @@ OnlyOneMessage/
 ├── data/
 │   ├── backups/               # MongoDB backups (mongo-backup service)
 │   ├── json/                  # Configurations
-│   │   ├── channels.json       # Channels reference (applicable if metrics_logging in metadata is set to true)
+│   │   ├── channels.json       # Channels reference (applicable if metrics_support in metadata is set to true)
 │   │   └── metadata.json       # Bot-wide configuration (see Installation)
 │   ├── .env                   # Your local environment config
 │   ├── .env.example           # Reference for .env, may be removed

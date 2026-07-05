@@ -4,7 +4,6 @@ from datetime import timedelta
 import time
 from essential.checks import is_guild_flooding
 from essential.logging import logmsg, event
-import sentry_sdk
 
 
 def update_stat(bot, stat_key: str, guild): # adds stat
@@ -303,8 +302,6 @@ class OnMessage(commands.Cog):
                 )
                 logmsg("ERROR", f"Unexpected error in on_message: {e}",
                     guild=str(message.guild.id), function="on_message")
-                
-                sentry_sdk.capture_exception(e)
 
 
 

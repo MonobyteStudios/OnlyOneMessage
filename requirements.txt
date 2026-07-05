@@ -3,7 +3,6 @@ asyncio
 discord.py
 python-dotenv
 pymongo[srv]
-sentry-sdk
 psutil
 prometheus_client
 flask

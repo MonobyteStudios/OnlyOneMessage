@@ -29,9 +29,12 @@ class OnMessageDelete(commands.Cog):
 
         unblacklisted = False
         serverdata = self.serverdata.find_one({"_id": message.guild.id}) or {}
-        channeldata = serverdata.get("channels", {}).get(str(channel.id), None)
+        channeldata = serverdata.get("channels", {}).get(str(channel.id))
 
-        blacklistrole = discord.utils.get(message.guild.roles, id=channeldata.get("blacklist_role", None))
+        if not channeldata:
+            return # no channel data found, exit early
+        
+        blacklistrole = discord.utils.get(message.guild.roles, id=channeldata.get("blacklist_role"))
         if not blacklistrole:
             return
         

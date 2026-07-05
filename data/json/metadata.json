@@ -1,13 +1,11 @@
 {
-    "version": "v2.0",
-    "build": "2026.7.4",
+    "version": "v2.0a",
+    "build": "2026.7.5",
     "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]",
 
     "development": false,
-    "sentry_logging": true,
-    "metrics_logging": true,
+    "metrics_support": true,
     "api_support": true,
-    "topgg_support": true,
 
     "admins": [
         684904765880139786,

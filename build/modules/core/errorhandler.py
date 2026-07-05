@@ -83,9 +83,6 @@ class ErrorHandler(commands.Cog):
             import traceback
             logmsg("ERROR", f"An unknown error has been detected:\n {traceback.format_exc()}", 
                    function="errorhandler")
-            
-            import sentry_sdk
-            sentry_sdk.capture_exception(error)
 
             await self.send_error_message(
                 interaction,
