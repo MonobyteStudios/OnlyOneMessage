@@ -53,18 +53,18 @@ class Help(commands.Cog):
             container.add_item(
                 discord.ui.TextDisplay(
                     "### ⚡ Get Started\n"
-                    f"1. Run `/addchannel` with the channel you want to use, plus its cooldown`\n"
+                    f"1. Run `/addchannel` with the channel you want to use, plus its cooldown\n"
                     "2. Use `/configchannel` to configure the channel added\n"
                     f"3. Use `/config` to configure global settings\n"
                     "4. You're all set! 🎉"
                 ))
             
-            
+
             container.add_item(discord.ui.Separator(spacing=discord.SeparatorSpacing.large))
 
             container.add_item(
                 discord.ui.TextDisplay(
-                    f"OnlyOneMessage is maintained by Monobyte Studios [[monobyte.studio](https://monobyte.studio)].\n"
+                    f"OnlyOneMessage is maintained by Monobyte Studios ([monobyte.studio](https://monobyte.studio))\n"
                     f"Need help? Join our [support server](https://onlyonemessage.monobyte.studio/support)!"
                 ))
             
@@ -72,6 +72,7 @@ class Help(commands.Cog):
                 discord.ui.ActionRow(
                     discord.ui.Button(label="Terms of Service", url="https://onlyonemessage.monobyte.studio/terms", emoji="<:settings:1368591899111329854>"),
                     discord.ui.Button(label="Privacy Policy", url="https://onlyonemessage.monobyte.studio/privacy", emoji="<:lock:1368590733602459669>"),
+                    discord.ui.Button(label="Source Code", url="https://github.com/MonobyteStudios/OnlyOneMessage"),
                 )
             )
 
