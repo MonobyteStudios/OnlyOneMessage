@@ -5,6 +5,8 @@ from essential.metadata import DEV_GUILDS
 from essential.checks import is_admin
 from essential.logging import logmsg
 import json
+import io
+
 
 class GlobalData(commands.Cog):
     def __init__(self, bot):
@@ -19,22 +21,27 @@ class GlobalData(commands.Cog):
             return
 
         logmsg("DEBUG", "/guilddata executed",
-            function="guilddata", guild=str(interaction.guild.id))
+               function="guilddata", guild=str(interaction.guild.id))
 
 
-
-        data = self.globaldata.find_one({"_id": "global"})
-        if not data:
-            await interaction.response.send_message("No global data has been found.", ephemeral=True)
+        cursor = self.globaldata.find({}) # find all documents in the globaldata collection
+        docs = list(cursor)
+        if not docs:
+            await interaction.response.send_message("No global data was found.", ephemeral=True)
             return
+        
 
-
-        formatted = json.dumps(data, indent=2, default=str)
-        if len(formatted) > 1990:
-            await interaction.response.send_message(
-                f"```json\n{formatted[:1990]}\n```\n...", ephemeral=True
+        formatted = json.dumps(docs, indent=2, default=str)
+        if len(formatted) > 1990: # send as a file if the formatted string is too long for a message
+            file = discord.File(
+                io.BytesIO(formatted.encode("utf-8")),
+                filename="globaldata.json"
             )
 
+            await interaction.response.send_message(
+                file=file,
+                ephemeral=True
+            )
         else:
             await interaction.response.send_message(f"```json\n{formatted}\n```", ephemeral=True)
 
