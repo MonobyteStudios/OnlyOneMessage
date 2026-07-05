@@ -1,9 +1,9 @@
 {
     "version": "v2.0a",
-    "build": "2026.7.4",
+    "build": "2026.7.5",
     "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]",
 
-    "development": true,
+    "development": false,
     "metrics_support": true,
     "api_support": true,
 

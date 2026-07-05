@@ -15,13 +15,13 @@ class GlobalData(commands.Cog):
 
     @app_commands.guilds(*DEV_GUILDS)
     @app_commands.command(name="globaldata", description="[DEV] Show global data for OnlyOneMessage")
-    async def guilddata(self, interaction: discord.Interaction):
+    async def globaldata(self, interaction: discord.Interaction):
         if not is_admin(interaction.user.id):
             await interaction.response.send_message("You are not authorized to use this command.", ephemeral=True)
             return
 
-        logmsg("DEBUG", "/guilddata executed",
-               function="guilddata", guild=str(interaction.guild.id))
+        logmsg("DEBUG", "/globaldata executed",
+               function="globaldata", guild=str(interaction.guild.id))
 
 
         cursor = self.globaldata.find({}) # find all documents in the globaldata collection
