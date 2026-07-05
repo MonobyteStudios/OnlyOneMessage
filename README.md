@@ -93,7 +93,7 @@ update the provided fields in the file to your liking:
 ```bash
 {
     "development": false, # Whether to use the development or production environment
-    "metrics_logging": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
+    "metrics_support": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
     "api_support": false, # Whether the API is enabled or not (If enabled, port 9300 will be opened)
 
     "admins": [
@@ -106,7 +106,7 @@ update the provided fields in the file to your liking:
 ```
 
 Additionally, edit the file `/data/json/channels.json` to match your setup.
-You do not need to touch this file if `metrics_logging` is set to `false`.
+You do not need to touch this file if `metrics_support` is set to `false`.
 
 
 4. Run the bot:
@@ -152,7 +152,7 @@ OnlyOneMessage/
 ├── data/
 │   ├── backups/               # MongoDB backups (mongo-backup service)
 │   ├── json/                  # Configurations
-│   │   ├── channels.json       # Channels reference (applicable if metrics_logging in metadata is set to true)
+│   │   ├── channels.json       # Channels reference (applicable if metrics_support in metadata is set to true)
 │   │   └── metadata.json       # Bot-wide configuration (see Installation)
 │   ├── .env                   # Your local environment config
 │   ├── .env.example           # Reference for .env, may be removed

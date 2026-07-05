@@ -4,7 +4,7 @@
     "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]",
 
     "development": true,
-    "metrics_logging": true,
+    "metrics_support": true,
     "api_support": true,
 
     "admins": [
