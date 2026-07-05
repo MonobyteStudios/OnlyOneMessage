@@ -110,7 +110,7 @@ Additionally, edit the file `/data/json/channels.json` to match your setup.
 You do not need to touch this file if `metrics_logging` is set to `false`.
 
 
-5. Run the bot:
+4. Run the bot:
 ```bash
 docker compose up -d
 ```
