@@ -78,7 +78,7 @@ MONGO_INITDB_ROOT_PASSWORD= # Make sure this password matches what's provided in
 MONGO_PROD_DB=onlyonemessage-production
 MONGO_DEV_DB=onlyonemessage-development
 
-# This is required only if their respective feature is enabled in metadata.json
+# These fields may be safely removed if you don't want them
 TOPGG_TOKEN=
 ```
 
@@ -95,7 +95,6 @@ update the provided fields in the file to your liking:
     "development": false, # Whether to use the development or production environment
     "metrics_logging": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
     "api_support": false, # Whether the API is enabled or not (If enabled, port 9300 will be opened)
-    "topgg_support": false, # Whether the bot will use top.gg integration
 
     "admins": [
         # Discord user ID's who have access to development commands

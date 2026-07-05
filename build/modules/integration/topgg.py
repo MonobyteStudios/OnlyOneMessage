@@ -2,7 +2,7 @@ import requests
 from discord.ext import commands, tasks
 import os
 from dotenv import load_dotenv
-from essential.metadata import devBranch, topggSupport
+from essential.metadata import devBranch
 from essential.logging import logmsg
 import asyncio
 
@@ -14,7 +14,7 @@ class TopGG(commands.Cog):
         self.topgg_token = os.getenv('TOPGG_TOKEN')
 
         # only start the loop if top.gg support is enabled and a token is provided
-        if not self.updatetopgg.is_running() and topggSupport and self.topgg_token and not devBranch:
+        if not self.updatetopgg.is_running() and self.topgg_token and not devBranch:
             self.updatetopgg.start()
         
         else:

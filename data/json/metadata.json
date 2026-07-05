@@ -6,7 +6,6 @@
     "development": true,
     "metrics_logging": true,
     "api_support": true,
-    "topgg_support": true,
 
     "admins": [
         684904765880139786,

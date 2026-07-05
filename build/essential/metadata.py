@@ -19,9 +19,7 @@ copyright = getvar("copyright", "metadata.json") or "[N/A]"
 
 devBranch = getvar("development", "metadata.json") if getvar("development", "metadata.json") is not None else True
 metricsLogging = getvar("metrics_logging", "metadata.json") if getvar("metrics_logging", "metadata.json") is not None else True
-
 apiSupported = getvar("api_support", "metadata.json") if getvar("api_support", "metadata.json") is not None else True
-topggSupport = getvar("topgg_support", "metadata.json") if getvar("topgg_support", "metadata.json") is not None else True
 
 guildjoinchannel = int(getvar("guildjoinchannel", "channels.json") or 0)
 guildleavechannel = int(getvar("guildleavechannel", "channels.json") or 0)
