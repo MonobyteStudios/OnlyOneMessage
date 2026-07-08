@@ -1,6 +1,6 @@
 {
-    "version": "v2.0a",
-    "build": "2026.7.5",
+    "version": "v2.0b",
+    "build": "2026.7.7",
     "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]",
 
     "metrics_support": true,

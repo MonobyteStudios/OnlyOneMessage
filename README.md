@@ -15,7 +15,7 @@ OnlyOneMessage is a feature-rich Discord bot that provides server admins **compl
 Set slowmodes **surpassing Discord's limit**, log **individual member cooldowns**, and **fine-tune** settings for **each individual channel**;
 all through a straightfoward interface using Discord's slash commands.
 
-v2.0a [Build 2026.7.5]
+v2.0b [Build 2026.7.7]
 
 📎 Visit the website: [onlyonemessage.monobyte.studio](https://onlyonemessage.monobyte.studio)
 
