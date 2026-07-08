@@ -7,7 +7,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 from collections import Counter
-from essential.metadata import version, devBranch, build, copyright, DEV_GUILDS
+from essential.metadata import version, build, copyright, DEV_GUILDS
 from essential.logging import logmsg
 
 
@@ -17,14 +17,6 @@ with open(os.path.join("data", "log.log"), 'a') as f:
 logmsg("INFO", "Startup request received - OnlyOneMessage is booting...", function="startup")
 logmsg("INFO", f"OnlyOneMessage {version} [Build {build}]", function="startup")
 logmsg("INFO", copyright, function="startup")
-
-if devBranch:
-    logmsg("NOTICE", "OnlyOneMessage is running on the ***development*** token. If this was unintentional, terminate the process and set 'development' in metadata to False.", 
-           function="startup")
-else:
-    logmsg("NOTICE", "OnlyOneMessage is running on the PRODUCTION token. If this was unintentional, terminate the process and set 'development' in metadata to True.", 
-           function="startup")
-    
 
 
 intents = discord.Intents.all()
@@ -151,13 +143,5 @@ async def on_ready():
 
 
 load_dotenv(dotenv_path=os.path.join("data", ".env")) # load bot token
-PROD_TOKEN = os.getenv('PROD_TOKEN')
-DEV_TOKEN = os.getenv('DEV_TOKEN')
-
-if not devBranch:
-    BOT_TOKEN = PROD_TOKEN
-
-else:
-    BOT_TOKEN = DEV_TOKEN
-
-client.run(BOT_TOKEN)
+TOKEN = os.getenv('TOKEN')
+client.run(TOKEN)

@@ -27,7 +27,6 @@ services:
     volumes:
       - mongo_data:/data/db
 
-
   mongo-backup: # backup service for MongoDB
     image: mongo:latest
     container_name: mongodb-backup

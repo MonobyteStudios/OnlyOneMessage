@@ -67,19 +67,17 @@ cd OnlyOneMessage
 Create the file `.env` inside `/data` with the following:
 
 ```bash
-# You may use the same Discord bot token for both fields
-PROD_TOKEN=
-DEV_TOKEN=
+TOKEN= # Put your Discord bot token here
 
+# MongoDB (Set <CHANGEME> to a secure password)
 MONGO_URI=mongodb://admin:<CHANGEME>@mongodb:27017
-MONGO_INITDB_ROOT_USERNAME=admin # Change if needed
-MONGO_INITDB_ROOT_PASSWORD= # Make sure this password matches what's provided in the URI!
+MONGO_DB=onlyonemessage 
 
-MONGO_PROD_DB=onlyonemessage-production
-MONGO_DEV_DB=onlyonemessage-development
+MONGO_INITDB_ROOT_USERNAME=admin
+MONGO_INITDB_ROOT_PASSWORD=<CHANGEME>
 
-# These fields may be safely removed if you don't want them
-TOPGG_TOKEN=
+# Integrations, these may be removed if you dont require it
+TOPGG_TOKEN=<CHANGEME>
 ```
 
 > [!TIP]
@@ -92,7 +90,6 @@ update the provided fields in the file to your liking:
 
 ```bash
 {
-    "development": false, # Whether to use the development or production environment
     "metrics_support": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
     "api_support": false, # Whether the API is enabled or not (If enabled, port 9300 will be opened)
 
