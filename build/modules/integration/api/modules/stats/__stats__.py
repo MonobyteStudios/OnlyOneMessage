@@ -1,7 +1,8 @@
 from flask import jsonify
-from ...init import trackAPIrequest
-from essential.metadata import version, build, getvar
+from essential.metadata import VERSION, BUILD
 import time
+
+from modules.integration.api.init import trackAPIrequest
 
 def register(app, bot):
         @app.route("/v1/stats")
@@ -20,8 +21,8 @@ def register(app, bot):
 
             trackAPIrequest(bot, "/v1/stats", 200)
             return jsonify({
-                "version": version,
-                "build": build,
+                "version": VERSION,
+                "build": BUILD,
                 "latency": round(bot.latency * 1000, 2),
                 "uptime": uptime,
                 "shards": bot.shard_count,

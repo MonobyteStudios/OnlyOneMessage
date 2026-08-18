@@ -1,9 +1,8 @@
 import discord
 from discord.ext import commands
-from essential.metadata import guildjoinchannel, guildleavechannel, metricsLogging
+from essential.metadata import GUILD_JOIN_CHANNEL
 from essential.logging import logmsg, event
 from essential.checks import is_guild_flooding
-from essential.data import remove_guild_data
 
 class GuildJoin(commands.Cog):
     def __init__(self, bot):
@@ -98,11 +97,6 @@ class GuildJoin(commands.Cog):
 
 
             # create embed for internal server
-            if not metricsLogging:
-                logmsg("WARNING", "Metrics collection is disabled due to set configuration. To change this, edit the bot's metadata.", 
-                       function="on_guild_join")
-                return
-            
             guild_owner = self.bot.get_user(guild.owner_id)
 
             view = discord.ui.LayoutView(timeout=None)
@@ -129,10 +123,9 @@ class GuildJoin(commands.Cog):
             )
 
             view.add_item(container)
-            logchannel = self.bot.get_channel(guildjoinchannel)
+            
+            logchannel = self.bot.get_channel(GUILD_JOIN_CHANNEL)
             if not logchannel:
-                logmsg("ERROR", f"Guild join log channel with ID {guildjoinchannel} was not found. Please check the configuration.", 
-                       guild=str(guild.id), function="on_guild_join")
                 return
 
             await logchannel.send(view=view)
@@ -145,5 +138,7 @@ class GuildJoin(commands.Cog):
                    guild=str(guild.id), function="on_guild_join")
             event("GuildJoinError") # common failure point, track in analytics
 
+
 async def setup(bot):
-    await bot.add_cog(GuildJoin(bot))
+    if GUILD_JOIN_CHANNEL:
+        await bot.add_cog(GuildJoin(bot))

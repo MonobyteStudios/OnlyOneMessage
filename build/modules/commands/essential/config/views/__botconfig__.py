@@ -1,6 +1,5 @@
 import discord
-from essential.logging import logmsg, event
-from essential.data import create_guild_data
+from essential.logging import logmsg
 from ..__configutils__ import refreshview
 
 

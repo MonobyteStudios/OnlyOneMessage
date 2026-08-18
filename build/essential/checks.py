@@ -1,10 +1,10 @@
 import discord
 from discord import app_commands
-from .logging import logmsg, event
-import json
-import os
 from collections import defaultdict, deque
 import time
+
+from essential.logging import logmsg
+from essential.metadata import ADMIN_IDS
 
 def requireguild(interaction: discord.Interaction, function: str):
     if interaction.guild is None:
@@ -48,10 +48,7 @@ def bot_check(**permissions):
 
 
 def is_admin(user_id: int):
-    with open(os.path.join("data", "json", "metadata.json"), encoding="utf-8") as f:
-        data = json.load(f)
-    return user_id in data.get("admins", [])
-
+    return user_id in ADMIN_IDS
 
 def guild_only():
     def predicate(interaction: discord.Interaction):

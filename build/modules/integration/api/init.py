@@ -11,7 +11,7 @@ import socket
 
 from essential.logging import logmsg
 from modules.integration.metrics import Metrics
-from essential.metadata import apiSupported
+from essential.metadata import API_SUPPORT
 
 
 def isPortinUse(port: int): # check if a port is in use
@@ -35,11 +35,6 @@ class API(commands.Cog):
     def __init__(self, bot, port: int = 9300):
         self.bot = bot
         self.port = port
-
-        if not apiSupported:
-            logmsg("WARNING", "The OOM API is disabled due to set configuration. To change this, edit the bot's metadata.", 
-                   function="api")
-            return
 
         self.api = Flask(__name__)
         CORS(self.api, resources={r"/v1/*": {"origins": "*"}})
@@ -94,4 +89,5 @@ class API(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(API(bot))
+    if API_SUPPORT:
+        await bot.add_cog(API(bot))

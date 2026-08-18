@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from essential.metadata import guildjoinchannel, guildleavechannel, metricsLogging
+from essential.metadata import GUILD_LEAVE_CHANNEL
 from essential.logging import logmsg, event
 from essential.checks import is_guild_flooding
 from essential.data import remove_guild_data
@@ -17,12 +17,6 @@ class GuildLeave(commands.Cog):
             
             event("RateLimited")
             return
-        
-        if not metricsLogging:
-            logmsg("WARNING", "Metrics collection is disabled due to set configuration. To change this, edit the bot's metadata.", 
-                   function="on_guild_remove")
-            return
-        
 
         logmsg("DEBUG", "on_guild_remove triggered", 
                guild=str(guild.id), function="on_guild_remove")
@@ -54,10 +48,9 @@ class GuildLeave(commands.Cog):
         )
 
         view.add_item(container)
-        logchannel = self.bot.get_channel(guildleavechannel)
+        
+        logchannel = self.bot.get_channel(GUILD_LEAVE_CHANNEL)
         if not logchannel:
-            logmsg("ERROR", f"Guild leave log channel with ID {guildleavechannel} was not found. Please check the configuration.", 
-                   guild=str(guild.id), function="on_guild_remove")
             return
 
         await logchannel.send(view=view)
@@ -69,4 +62,5 @@ class GuildLeave(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(GuildLeave(bot))
+    if GUILD_LEAVE_CHANNEL:
+        await bot.add_cog(GuildLeave(bot))

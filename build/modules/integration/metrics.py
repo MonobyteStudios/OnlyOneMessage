@@ -5,17 +5,10 @@ import time
 import os
 
 from essential.logging import logmsg, event_usage
-from essential.metadata import metricsLogging
 
 class Metrics(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-        if not metricsLogging:
-            logmsg("WARNING", "Metrics collection is disabled due to set configuration. To change this, edit the bot's metadata.", 
-                   function="metrics")
-            return
-        
         port = 9200
         PREFIX = "oom_"
         
@@ -70,7 +63,7 @@ class Metrics(commands.Cog):
         if not self.update_logfrequency.is_running():
             self.update_logfrequency.start()
 
-        logmsg("INFO", f"Prometheus endpoint active at port {port}.", 
+        logmsg("INFO", f"Prometheus is now active at port {port}.", 
                function="metrics")
 
 

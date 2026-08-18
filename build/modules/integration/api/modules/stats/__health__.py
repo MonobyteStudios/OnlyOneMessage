@@ -1,5 +1,5 @@
 from flask import jsonify
-from ...init import trackAPIrequest
+from modules.integration.api.init import trackAPIrequest
 
 def register(app, bot):
     @app.route("/v1/health")

@@ -1,17 +1,5 @@
 {
-    "version": "v2.0b",
-    "build": "2026.7.7",
-    "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]",
-
-    "metrics_support": true,
-    "api_support": true,
-
-    "admins": [
-        684904765880139786,
-        820500281846267907
-    ],
-    "internalguilds": [
-        1258103203946561619,
-        1343617146865057822
-    ]
+    "version": "v2.1 Beta",
+    "build": "2026.8.17",
+    "copyright": "(c) 2024-2026 Monobyte Studios [monobyte.studio]"
 }

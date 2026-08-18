@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-from essential.metadata import feedbackchannel, metricsLogging
+from essential.metadata import FEEDBACK_CHANNEL
 from essential.checks import guild_only
 from essential.logging import logmsg
 
@@ -46,10 +46,8 @@ class FeedbackModal(discord.ui.Modal, title="Feedback"):
 
 
     async def on_submit(self, interaction: discord.Interaction):
-        channel = discord.utils.get(interaction.guild.channels, id=feedbackchannel)
+        channel = discord.utils.get(interaction.guild.channels, id=FEEDBACK_CHANNEL)
         if not channel:
-            logmsg("ERROR", f"Feedback channel with ID {feedbackchannel} was not found. Please check the configuration.", 
-                   guild=str(interaction.guild.id), function="feedback")
             return
 
         view = discord.ui.LayoutView(timeout=None)
@@ -76,9 +74,5 @@ class FeedbackModal(discord.ui.Modal, title="Feedback"):
 
 
 async def setup(bot):
-    if metricsLogging and feedbackchannel:
+    if FEEDBACK_CHANNEL:
         await bot.add_cog(Feedback(bot))
-
-    else:
-        logmsg("WARNING", "The feedback cog was not registered due to set configuration. To change this, edit the bot's metadata.", 
-               function="feedback")

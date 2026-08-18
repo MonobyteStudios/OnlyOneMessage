@@ -88,5 +88,5 @@ def remove_guild_data(bot, guild_id):
                 guild=str(guild_id), function="remove_guild_data")
         
     else:
-        logmsg("WARNING", f"There is no server data to remove for guild ID {guild_id}",
+        logmsg("WARNING", f"There is no server data to remove for guild ID {guild_id}.",
                 guild=str(guild_id), function="remove_guild_data")

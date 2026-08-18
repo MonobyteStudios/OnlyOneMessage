@@ -7,16 +7,16 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 from collections import Counter
-from essential.metadata import version, build, copyright, DEV_GUILDS
+from essential.metadata import VERSION, BUILD, COPYRIGHT, DEV_GUILDS
 from essential.logging import logmsg
-
+load_dotenv(dotenv_path=os.path.join("data", ".env"))
 
 with open(os.path.join("data", "log.log"), 'a') as f:
     f.write("\n -- APP STARTUP REQUESTED -- \n")
 
 logmsg("INFO", "Startup request received - OnlyOneMessage is booting...", function="startup")
-logmsg("INFO", f"OnlyOneMessage {version} [Build {build}]", function="startup")
-logmsg("INFO", copyright, function="startup")
+logmsg("INFO", f"OnlyOneMessage {VERSION} [Build {BUILD}]", function="startup")
+logmsg("INFO", COPYRIGHT, function="startup")
 
 
 intents = discord.Intents.all()
@@ -136,12 +136,9 @@ async def on_ready():
         logmsg("ERROR", content2, function="startup")
 
 
-    logmsg("INFO", f"OnlyOneMessage has successfully started on {version}!", 
+    logmsg("INFO", f"OnlyOneMessage has successfully started on {VERSION}!", 
            function="startup")
 
 
-
-
-load_dotenv(dotenv_path=os.path.join("data", ".env")) # load bot token
 TOKEN = os.getenv('TOKEN')
 client.run(TOKEN)

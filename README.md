@@ -62,48 +62,9 @@ cd OnlyOneMessage
 > [!WARNING]
 > The `nightly` branch of OnlyOneMessage is a **beta build of a later version**, expect bugs when using it.
 
-2. Configure environment variables
+2. Configure the bot
 
-Create the file `.env` inside `/data` with the following:
-
-```bash
-TOKEN= # Put your Discord bot token here
-
-# MongoDB (Set <CHANGEME> to a secure password)
-MONGO_URI=mongodb://admin:<CHANGEME>@mongodb:27017
-MONGO_DB=onlyonemessage 
-
-MONGO_INITDB_ROOT_USERNAME=admin
-MONGO_INITDB_ROOT_PASSWORD=<CHANGEME>
-
-# Integrations, these may be removed if you dont require it
-TOPGG_TOKEN=<CHANGEME>
-```
-
-> [!TIP]
-> There's a `.env.example` file inside the `data` folder. Use it as a reference!
-
-3. Configure metadata
-
-The metadata file for OnlyOneMessage can be found in `/data/json/metadata.json`;
-update the provided fields in the file to your liking:
-
-```bash
-{
-    "metrics_support": false, # Whether to collect metrics or not (If enabled, port 9200 will be opened)
-    "api_support": false, # Whether the API is enabled or not (If enabled, port 9300 will be opened)
-
-    "admins": [
-        # Discord user ID's who have access to development commands
-    ],
-    "internalguilds": [
-        # Discord guild ID's where admins can execute development commands
-    ]
-}
-```
-
-Additionally, edit the file `/data/json/channels.json` to match your setup.
-You do not need to touch this file if `metrics_support` is set to `false`.
+Duplicate the file `.env.example` inside `data`. Name it `.env`, and fill in what's requested.
 
 
 4. Run the bot:
@@ -125,42 +86,6 @@ docker compose down -v
 
 > [!WARNING]
 > `-v` will clear all volumes related to OnlyOneMessage, **including it's database.** If you wish to keep it's database, leave `-v` out.
-
-
-## 📁 Project Structure
-
-```
-OnlyOneMessage/
-├── .github/workflows/
-│   └── deploy.yml           # CI/CD, builds + deploys on push to main
-├── build/
-│   ├── essential/           # Essential functions & variables to be used in modules, such as logmsg
-│   ├── modules/
-│   │   ├── commands/        # Slash commands, grouped by purpose
-│   │   │   ├── dev/           # Development-only commands, accessible to "admins" in metadata.json
-│   │   │   ├── essential/     # /config & /configchannel commands
-│   │   │   ├── main/          # Primary commands (/addchannel, /removechannel)
-│   │   │   └── misc/          # Everything else
-│   │   ├── core/            # Required modules (MongoDB, error handler)
-│   │   ├── events/          # Event listeners (on_message, on_member_update, etc.)
-│   │   ├── integration/     # Integrations for services (top.gg, API)
-│   │   └── loops/           # Background tasks
-│   └── main.py               # Entry point (Run this to start the bot)
-├── data/
-│   ├── backups/               # MongoDB backups (mongo-backup service)
-│   ├── json/                  # Configurations
-│   │   ├── channels.json       # Channels reference (applicable if metrics_support in metadata is set to true)
-│   │   └── metadata.json       # Bot-wide configuration (see Installation)
-│   ├── .env                   # Your local environment config
-│   ├── .env.example           # Reference for .env, may be removed
-│   └── log.log
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── LICENSE
-├── README.md
-└── requirements.txt
-```
 
 
 ## 🛠️ Contributing to OnlyOneMessage
