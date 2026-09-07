@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord import app_commands
 
 from essential.checks import user_check, bot_check
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 from essential.data import create_guild_data
 
 def format_duration(seconds):
@@ -80,7 +80,6 @@ class AddChannel(commands.Cog):
                 missing_perms.append("Manage Permissions")
                 
             if missing_perms:
-                event("SetupFailedPermissions")
                 logmsg("DEBUG", f"Missing permissions for channel {channel.id}: {', '.join(missing_perms)}. Raising error.", 
                     guild=str(interaction.guild.id), function="addchannel")
                 
@@ -103,7 +102,31 @@ class AddChannel(commands.Cog):
                 return
             
 
-            
+            # scan existing role overwrites and fix perms that would conflict with cooldown management
+            modified_roles = []
+
+            for role, overwrite in channel.overwrites.items(): # for every role in the overwrite
+                if not isinstance(role, discord.Role):
+                    continue
+                if role.permissions.administrator or role.permissions.bypass_slowmode: # the role is likely not meant to be touched
+                    continue
+
+                changed = False
+                for perm in ("send_messages", "create_private_threads", "create_public_threads", "send_messages_in_threads"):
+                    if getattr(overwrite, perm) is True:
+                        setattr(overwrite, perm, None) # set to None (neutral)
+                        changed = True
+
+                if changed:
+                    await channel.set_permissions(
+                        role,
+                        overwrite=overwrite,
+                        reason=f"OnlyOneMessage channel setup (Executed by {interaction.user.name})"
+                    )
+                    modified_roles.append(role)
+                    logmsg("DEBUG", f"Fixed conflicting permissions for role {role.id} in channel {channel.id}", 
+                        guild=str(interaction.guild.id), function="addchannel")
+
 
 
             blacklistrole = discord.utils.get(interaction.guild.roles, id=channeldata.get("blacklist_role", 0))
@@ -141,7 +164,6 @@ class AddChannel(commands.Cog):
                 
 
             except discord.Forbidden:
-                event("SetupFailedPermissions")
                 logmsg("WARNING", "Failed to set role permissions: Forbidden", 
                     guild=str(interaction.guild.id), function="addchannel")
 
@@ -192,7 +214,11 @@ class AddChannel(commands.Cog):
                     f"## <:check:1471690195576295619> Action Successful\n"
                     f"{channel.mention}'s cooldown has been set to `{format_duration(duration.value)}`.\n"
 
-                    "If you wish to update this channel's configuration, use the `/configchannel` command."
+                    "If you wish to update this channel's configuration, use the `/configchannel` command.\n"
+
+                    "### What now?\n"
+                    "1. Use `/config` and `/configchannel` to manage the bot\n"
+                    f"2. Let members chat in {channel.mention}!"
                 )
             )
 
@@ -203,6 +229,16 @@ class AddChannel(commands.Cog):
                     f"-# A role has been made, {blacklistrole.mention}, to manage cooldowns for this channel. Make sure you keep it in a safe place!"
                 )
             )
+
+            if modified_roles:
+                role_labels = [f"@everyone" if role.is_default() else role.mention for role in modified_roles]
+
+                container.add_item(
+                    discord.ui.TextDisplay(
+                        "-# I also noticed some roles had permissions that would've conflicted with cooldown management "
+                        f"({', '.join(role_labels)}), so I reset them to neutral. Edit them if needed."
+                    )
+                )
             
 
             view.add_item(container)
@@ -215,7 +251,6 @@ class AddChannel(commands.Cog):
 
 
         except Exception as e:
-            event("SetupFailedUnknown")
             logmsg("ERROR", f"An error has occurred in /addchannel: {e}", 
                 guild=str(interaction.guild.id), function="addchannel")
 

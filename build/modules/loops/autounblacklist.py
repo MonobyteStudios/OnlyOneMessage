@@ -1,6 +1,6 @@
 import discord
 import time
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 from discord.ext import commands, tasks
 
 class loops(commands.Cog):
@@ -62,9 +62,7 @@ class loops(commands.Cog):
                         removedata.append(memberid)
 
                         try:
-                            event("AutoUnblacklist")
                             await member.remove_roles(blacklist_role, reason="Cooldown expired for this member")
-
 
                         except discord.Forbidden:
                             logmsg("WARNING", f"Failed to remove blacklist role from member {memberid} in channel {channel_id}: Forbidden",

@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from essential.metadata import GUILD_JOIN_CHANNEL
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 from essential.checks import is_guild_flooding
 
 class GuildJoin(commands.Cog):
@@ -136,7 +136,6 @@ class GuildJoin(commands.Cog):
         except Exception as e:
             logmsg("WARNING", f"An error occurred in on_guild_join: {e}", 
                    guild=str(guild.id), function="on_guild_join")
-            event("GuildJoinError") # common failure point, track in analytics
 
 
 async def setup(bot):

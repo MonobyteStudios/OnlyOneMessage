@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord import app_commands
 
 from essential.checks import user_check, bot_check
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 from essential.data import create_guild_data
 from essential.autocomplete import set_channel_autocomplete
 
@@ -90,7 +90,6 @@ class RemoveChannel(commands.Cog):
 
 
         except Exception as e:
-            event("SetupFailedUnknown")
             logmsg("ERROR", f"An error has occurred in /removechannel: {e}", 
                 guild=str(interaction.guild.id), function="removechannel")
 

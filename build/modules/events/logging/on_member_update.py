@@ -3,7 +3,7 @@ import aiohttp
 from discord.ext import commands
 from datetime import timedelta
 from essential.checks import is_guild_flooding
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 from essential.data import decrypt
 
 
@@ -66,9 +66,8 @@ class OnMemberUpdate(commands.Cog):
             if is_guild_flooding(after.guild.id):
                 logmsg("WARNING", f"Guild {after.guild.name} ({after.guild.id}) exceeded event rate limit.",
                     guild=str(after.guild.id), function="on_member_update")
-                
-                event("RateLimited")
-                return            
+                return         
+               
             logmsg("DEBUG", "on_member_update event fired",
                 guild=str(after.guild.id), function="on_member_update")
 

@@ -4,7 +4,7 @@ services:
     image: onlyonemessage:latest
     container_name: onlyonemessage
     restart: unless-stopped
-    
+
     depends_on:
       - mongodb
     volumes:
@@ -19,7 +19,7 @@ services:
 
   mongodb: # database service for OnlyOneMessage
     image: mongo:latest
-    container_name: mongodb
+    container_name: oom-db
     restart: unless-stopped
 
     env_file:
@@ -29,9 +29,9 @@ services:
 
   mongo-backup: # backup service for MongoDB
     image: mongo:latest
-    container_name: mongodb-backup
+    container_name: oom-db-backup
     restart: unless-stopped
-
+    
     depends_on:
       - mongodb
     volumes:
@@ -41,11 +41,11 @@ services:
 
     # backups are taken every 24 hours, old backups are deleted after 7 days
     entrypoint: |
-          bash -c 'while true; do
-            mongodump --host mongodb -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --out /backups/$$(date +%Y-%m-%d_%H-%M-%S)
-            find /backups -maxdepth 1 -type d -mtime +7 -exec rm -rf {} +
-            sleep 86400
-          done'
-          
+      bash -c 'while true; do
+        mongodump --host mongodb -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --out /backups/$$(date +%Y-%m-%d_%H-%M-%S)
+        find /backups -maxdepth 1 -type d -mtime +7 -exec rm -rf {} +
+        sleep 86400
+      done'
+
 volumes:
   mongo_data:

@@ -3,7 +3,7 @@ from discord.ext import commands
 from datetime import timedelta
 import time
 from essential.checks import is_guild_flooding
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 
 
 def update_stat(bot, stat_key: str, guild): # adds stat
@@ -150,8 +150,6 @@ class OnMessage(commands.Cog):
         if is_guild_flooding(message.guild.id):
             logmsg("WARNING", f"Guild {message.guild.name} ({message.guild.id}) exceeded event rate limit.", 
                     guild=str(message.guild.id), function="on_message")
-            
-            event("RateLimited")
             return
 
 
@@ -219,7 +217,6 @@ class OnMessage(commands.Cog):
 
 
         if perms.bypass_slowmode or perms.administrator: # if the user has perms to bypass slowmode
-            event("MessageWhitelisted")
             update_stat(self.bot, "totalwhitelists", message.guild)
             
             try:
@@ -248,7 +245,6 @@ class OnMessage(commands.Cog):
 
                     update_stat(self.bot, "totalblacklists", message.guild)
                     await self.add_durations(message.guild.id, message.channel.id, message.author.id)
-                    event("MessageBlacklisted")
 
                     logmsg("DEBUG", "Attempt Successful", 
                         guild=str(message.guild.id), function="on_message")

@@ -78,10 +78,3 @@ def logmsg(status, message, guild: str = None, function: str = None):
 
     # show in console
     print(log_entry)
-
-
-event_usage = Counter()
-def event(event_name: str): # custom event handler (this is separate from events, so its a different counter)
-    event_usage[event_name] += 1
-    logmsg("DEBUG", f"Event tracked: {event_name}", 
-           function="event")

@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from essential.metadata import GUILD_LEAVE_CHANNEL
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 from essential.checks import is_guild_flooding
 from essential.data import remove_guild_data
 
@@ -14,8 +14,6 @@ class GuildLeave(commands.Cog):
         if is_guild_flooding(guild.id):
             logmsg("WARNING", f"Guild {guild.name} ({guild.id}) exceeded event rate limit.", 
                    guild=str(guild.id), function="on_guild_remove")
-            
-            event("RateLimited")
             return
 
         logmsg("DEBUG", "on_guild_remove triggered", 

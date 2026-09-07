@@ -4,7 +4,7 @@ from prometheus_client import start_http_server, Gauge, Counter, REGISTRY
 import time
 import os
 
-from essential.logging import logmsg, event_usage
+from essential.logging import logmsg
 
 class Metrics(commands.Cog):
     def __init__(self, bot):
@@ -86,11 +86,6 @@ class Metrics(commands.Cog):
             connected = 1 if (latency or 0) > 0 else 0 # 1 = connected, 0 = disconnected
             self.latencies.labels(shard=str(shard_id)).set(latency)
             self.connection.labels(shard=str(shard_id)).set(connected)
-
-
-        for event_name, count in event_usage.items():
-            self.interactions.labels(interaction=f"{event_name}").inc(count)
-            event_usage[event_name] = 0  # reset, to prevent double-counting
 
 
         # static stats

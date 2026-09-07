@@ -2,7 +2,7 @@ import discord
 import aiohttp
 from discord.ext import commands
 from essential.checks import is_guild_flooding
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 from essential.data import decrypt
 
 class OnMessageDelete(commands.Cog):
@@ -16,12 +16,9 @@ class OnMessageDelete(commands.Cog):
         if is_guild_flooding(message.guild.id):
             logmsg("WARNING", f"Guild {message.guild.name} ({message.guild.id}) exceeded event rate limit.", 
                    guild=str(message.guild.id), function="on_message_delete")
-            
-            event("RateLimited")
             return
+
         
-
-
         channel = message.channel
         logmsg("DEBUG", "message deletion detected", 
                guild=str(message.guild.id), function="on_message_delete")

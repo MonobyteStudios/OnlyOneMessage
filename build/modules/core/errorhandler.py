@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-from essential.logging import logmsg, event
+from essential.logging import logmsg
 
 
 class ErrorHandler(commands.Cog):
@@ -34,7 +34,6 @@ class ErrorHandler(commands.Cog):
 
 
     async def errorhandler(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
-        event("AppCommandError")
         logmsg("DEBUG", "Error handler executed for app commands", 
                function="errorhandler")
 
